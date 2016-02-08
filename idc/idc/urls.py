@@ -13,9 +13,22 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+import re
+
+import froala_editor.urls
+from django.conf import settings
+from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.static import serve
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^froala_editor/', include(froala_editor.urls)),
+]
+
+urlpatterns += [
+    url(r'^%s(?P<path>.*)$' % re.escape(settings.STATIC_URL.lstrip('/')), serve,
+        kwargs={'document_root': settings.STATIC_ROOT}),
+    url(r'^%s(?P<path>.*)$' % re.escape(settings.MEDIA_URL.lstrip('/')), serve,
+        kwargs={'document_root': settings.MEDIA_ROOT}),
 ]
