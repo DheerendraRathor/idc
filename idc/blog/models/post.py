@@ -1,11 +1,11 @@
 from django.contrib.auth.models import User
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from froala_editor.fields import FroalaField
 from simple_history.models import HistoricalRecords
 
 from ..utils import PostStatusTypes
 from .category import Category
+from .tag import Tag
 
 
 class Post(models.Model):
@@ -20,8 +20,7 @@ class Post(models.Model):
     comments_allowed = models.BooleanField(default=True, help_text='If comments are allowed')
     categories = models.ManyToManyField(Category, related_name='posts', blank=True, db_index=True)
     removed = models.BooleanField(default=False, help_text='Temporarily remove post')
-    tags = ArrayField(base_field=models.SlugField(max_length=32), size=10, null=True, blank=True,
-                      help_text='Comma separated list of tags', db_index=True)
+    tags = models.ManyToManyField(Tag, related_name='posts')
     history = HistoricalRecords()
 
     def __str__(self):

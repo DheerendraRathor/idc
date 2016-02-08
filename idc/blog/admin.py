@@ -5,7 +5,7 @@ from django_mptt_admin.admin import DjangoMpttAdmin
 from mptt.admin import MPTTModelAdmin
 from simple_history.admin import SimpleHistoryAdmin
 
-from .models import Category, Comment, Post
+from .models import Category, Comment, Post, Tag
 
 
 class CategoryAdmin(DjangoMpttAdmin):
@@ -29,7 +29,9 @@ class PostAdmin(SimpleHistoryAdmin):
     }
 
     def post_tags(self, post: Post):
-        return ', '.join(post.tags)
+        tags = post.tags.all().values_list('name', flat=True)
+        return ', '.join(tags)
+
 
     def move_to_trash(self, request, queryset):
         posts_deleted = queryset.update(removed=True)
@@ -55,6 +57,11 @@ class CommentAdmin(MPTTModelAdmin):
     list_display = ['comment', 'author', 'post']
 
 
+class TagAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description', 'slug', 'created_by', 'created_at']
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Tag, TagAdmin)
