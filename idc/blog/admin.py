@@ -4,6 +4,7 @@ from django.forms.widgets import Textarea
 from django_mptt_admin.admin import DjangoMpttAdmin
 from mptt.admin import MPTTModelAdmin
 from simple_history.admin import SimpleHistoryAdmin
+from django_select2.forms import Select2MultipleWidget
 
 from .models import Category, Comment, Post, Tag
 
@@ -24,7 +25,10 @@ class PostAdmin(SimpleHistoryAdmin):
 
     formfield_overrides = {
         models.TextField: {
-            'widget': Textarea(attrs={'rows': 3})
+            'widget': Textarea(attrs={'rows': 3}),
+        },
+        models.ManyToManyField: {
+            'widget': Select2MultipleWidget(),
         }
     }
 

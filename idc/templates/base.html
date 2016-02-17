@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+{% load staticfiles %}
+
 <html lang="en">
 
 <head>
@@ -6,21 +9,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <meta name="description" content="IDC Blog">
-    <meta name="author" content="Bijoy Singh Kochar"/>
+    <meta name="author" content="Bijoy Singh Kochar, Dheerendra Rathor"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="IDC, IITB, IIT Bombay">
 
-    <title>IDC IIT Bombay</title>
+    <title>{% block title %}{% endblock %}</title>
 
-    <link rel="icon" type="image/png" href="/static/images/favicon.png">
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/common.css" rel="stylesheet">
-    <link href="css/profile.css" rel="stylesheet">
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/common.css' %}" rel="stylesheet">
+    <link href="{% static 'css/profile.css' %}" rel="stylesheet">
 
     <meta name="theme-color" content="#dd1338">
     <meta name="msapplication-navbutton-color" content="#dd1338">
     <meta name="apple-mobile-web-app-status-bar-style" content="#dd1338">
 </head>
 
+<body style=" background-color:#e1e1e1;">
+    <nav class="idc-navbar navbar navbar-default navbar-fixed-top">
+      <div class="idc-navbar-container container-fluid">
 
+          <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed"
+              data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+            <img class="idc-navbar-logo" alt="Brand" src="{% static 'images/idc-logo.jpg %}" >
+          </a>
+          <!--<a class="navbar-brand" href="#">IIT Bombay</a>-->
+        </div>
 
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">PROFILE</a></li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">LOGOUT</a></li>
+          </ul>
+        </div>
+    </nav>
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">&copy; Centre for Urban Science & Engineering (C-USE), IIT Bombay</p>
+    </div>
+</footer>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+</body>
+</html>

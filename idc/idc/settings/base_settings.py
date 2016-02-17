@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'mptt',
     'django_mptt_admin',
     'froala_editor',
+    'django_select2',
     'account',
     'blog',
 ]
