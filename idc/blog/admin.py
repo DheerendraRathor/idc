@@ -18,6 +18,7 @@ class PostAdmin(SimpleHistoryAdmin):
     list_display = ['__str__', 'author', 'post_tags', 'created_at', 'modified_at', 'status', 'removed']
     list_filter = ['categories', 'status', 'removed']
     search_fields = ['title', 'excerpt', 'content', 'tags']
+    list_editable = ['status', 'removed', ]
 
     date_hierarchy = 'modified_at'
 
@@ -35,7 +36,6 @@ class PostAdmin(SimpleHistoryAdmin):
     def post_tags(self, post: Post):
         tags = post.tags.all().values_list('name', flat=True)
         return ', '.join(tags)
-
 
     def move_to_trash(self, request, queryset):
         posts_deleted = queryset.update(removed=True)

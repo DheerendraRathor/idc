@@ -1,0 +1,105 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls admin_static admin_modify staticfiles %}
+
+{% block extrastyle %}
+    <link type="text/css" rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
+    {{ block.super }}
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="content-main">
+        {% block object-tools %}
+            {% if change %}
+                {% if not is_popup %}
+                    <ul class="object-tools">
+                        {% block object-tools-items %}
+                            <li>
+                                {% url opts|admin_urlname:'history' original.pk|admin_urlquote as history_url %}
+                                <a href="{% add_preserved_filters history_url %}"
+                                   class="historylink">{% trans "History" %}</a>
+                            </li>
+                            {% if has_absolute_url %}
+                                <li><a href="{{ absolute_url }}" class="viewsitelink">{% trans "View on site" %}</a>
+                                </li>
+                            {% endif %}
+                        {% endblock %}
+                    </ul>
+                {% endif %}
+            {% endif %}
+        {% endblock %}
+
+        <div class="row">
+            <div class="col-md-3">
+
+                <div class="panel-group text-capitalize" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                                   aria-expanded="true" aria-controls="collapseOne">
+                                    Post status
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                             aria-labelledby="headingOne">
+                            <div class="panel-body">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                   href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Categories
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
+                             aria-labelledby="headingTwo">
+                            <div class="panel-body">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                   href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Tags
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
+                             aria-labelledby="headingThree">
+                            <div class="panel-body">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-9">
+                <h1 contenteditable="true">Title</h1>
+                <hr>
+                <div>
+                    {{ adminform.form.content }}
+                </div>
+                <hr>
+                <div class="form-group">
+                    <textarea rows="3" maxlength="500" class="form-control"
+                              placeholder="Custom excerpt for the post"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
