@@ -25,7 +25,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#dd1338">
 </head>
 
-<body style=" background-color:#e1e1e1;">
+<body>
 <nav class="idc-navbar navbar navbar-default navbar-fixed-top">
     <div class="idc-navbar-container container-fluid">
 
@@ -55,10 +55,58 @@
     </div>
 </nav>
 
-
-<div class="container idc-main-container">
+<div class="container-fluid idc-main-container">
     <div class="row">
-        <div class="idc-profile-container">
+        <div class="idc-main-sidebar col-xs-12 col-md-2">
+            <div class="heading">More</div>
+            {% if user.user_profile.twitter != '' %}
+                <div class="share">
+                    <a href="{{ user.user_profile.twitter }}" target="_blank">
+                        <img src="{% static 'images/icons/twitter.png' %}">
+                        <span>Twitter</span></a>
+                </div>
+            {% endif %}
+
+            {% if user.user_profile.facebook != '' %}
+                <div class="share">
+                    <a href="{{ user.user_profile.facebook }}" target="_blank">
+                        <img src="{% static 'images/icons/facebook.png' %}">
+                        <span>Facebook</span></a>
+                </div>
+            {% endif %}
+
+            {% if user.user_profile.google != '' %}
+                <div class="share"><a href="{{ user.user_profile.google }}" target="_blank">
+                    <img src="{% static 'images/icons/google+.png' %}">
+                    <span>Google+</span></a>
+                </div>
+            {% endif %}
+
+            {% if user.user_profile.blogger != '' %}
+                <div class="share">
+                    <a href="{{ user.user_profile.blogger }}" target="_blank">
+                        <img src="{% static 'images/icons/blogger.png' %}">
+                        <span>Blogger</span></a>
+                </div>
+            {% endif %}
+
+            {% if user.user_profile.homepage != '' %}
+                <div class="share">
+                    <a href="{{ user.user_profile.homepage }}" target="_blank">
+                        <img src="{% static 'images/icons/html5.png' %}">
+                        <span>Homepage</span></a>
+                </div>
+            {% endif %}
+
+            {% if user.email != '' %}
+                <div class="share">
+                    <a href="{{ user.email }}" target="_blank">
+                        <img src="{% static 'images/icons/gmail.png' %}">
+                        <span>Email</span></a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="idc-profile-container col-xs-12 col-md-10">
             <div class="idc-profile-images">
 
                 {% if user.user_profile.cover == null or user.user_profile.cover.name == '' %}
@@ -81,48 +129,52 @@
             </div>
 
             <hr/>
+            <div class="idc-profile-user-about">
+                Lots of stuff about me that can be added here!
+            </div>
+            <hr/>
 
             <div class="idc-profile-user-links">
                 {% if user.user_profile.twitter != '' %}
-                <div class="item">
-                    <img src="{% static 'images/icons/twitter.png' %}">
-                    <a href="{{ user.user_profile.twitter }}" target="_blank">Twitter Profile</a>
-                </div>
+                    <div class="item">
+                        <img src="{% static 'images/icons/twitter.png' %}">
+                        <a href="{{ user.user_profile.twitter }}" target="_blank">Twitter Profile</a>
+                    </div>
                 {% endif %}
 
                 {% if user.user_profile.facebook != '' %}
-                <div class="item">
-                    <img src="{% static 'images/icons/facebook.png' %}">
-                    <a href="{{ user.user_profile.facebook }}" target="_blank">Facebook Profile</a>
-                </div>
+                    <div class="item">
+                        <img src="{% static 'images/icons/facebook.png' %}">
+                        <a href="{{ user.user_profile.facebook }}" target="_blank">Facebook Profile</a>
+                    </div>
                 {% endif %}
 
                 {% if user.user_profile.google != '' %}
-                <div class="item">
-                    <img src="{% static 'images/icons/google.png' %}">
-                    <a href="{{ user.user_profile.google }}" target="_blank">Google+ Profile</a>
-                </div>
+                    <div class="item">
+                        <img src="{% static 'images/icons/google+.png' %}">
+                        <a href="{{ user.user_profile.google }}" target="_blank">Google+ Profile</a>
+                    </div>
                 {% endif %}
 
                 {% if user.user_profile.blogger != '' %}
-                <div class="item">
-                    <img src="{% static 'images/icons/blogger.png' %}">
-                    <a href="{{ user.user_profile.blogger }}" target="_blank">blogger Profile</a>
-                </div>
+                    <div class="item">
+                        <img src="{% static 'images/icons/blogger.png' %}">
+                        <a href="{{ user.user_profile.blogger }}" target="_blank">blogger Profile</a>
+                    </div>
                 {% endif %}
 
                 {% if user.user_profile.homepage != '' %}
-                <div class="item">
-                    <img src="{% static 'images/icons/html5.png' %}">
-                    <a href="{{ user.user_profile.homepage }}" target="_blank">Homepage</a>
-                </div>
+                    <div class="item">
+                        <img src="{% static 'images/icons/html5.png' %}">
+                        <a href="{{ user.user_profile.homepage }}" target="_blank">Homepage</a>
+                    </div>
                 {% endif %}
 
                 {% if user.email != '' %}
-                <div class="item">
-                    <img src="{% static 'images/icons/gmail.png' %}">
-                    <a href="{{ user.email }}" target="_blank">Email Id</a>
-                </div>
+                    <div class="item">
+                        <img src="{% static 'images/icons/gmail.png' %}">
+                        <a href="{{ user.email }}" target="_blank">Email Id</a>
+                    </div>
                 {% endif %}
             </div>
             <div>

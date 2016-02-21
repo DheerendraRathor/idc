@@ -1,11 +1,47 @@
+.no-padding {
+    padding: 0px;
+}
+
 .idc-navbar {
     padding: 18px;
-    background-color: #1976D2;
+    background-color: #1565C0;
     border-bottom: none;
 }
 
 .idc-navbar-container {
-    background-color: #1976D2;
+    background-color: #1565C0;
+}
+
+body {
+    background-color: #313443;
+}
+
+.idc-main-sidebar {
+    display: flex;
+    flex-direction: column;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    padding: 0px;
+}
+
+.idc-main-sidebar .item a {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+}
+
+.idc-main-sidebar .heading {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 16px;
+}
+
+.idc-main-sidebar .item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.idc-main-sidebar .item {
+    padding: 16px;
 }
 
 .navbar-nav li a,
@@ -23,7 +59,7 @@
 }
 
 .idc-main-container {
-    padding-top: 87px;
+    padding-top: 86px;
 }
 
 .footer {
@@ -35,4 +71,57 @@
 
 .footer .text-muted {
     color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.idc-main-sidebar .share a {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 4px 16px;
+    text-decoration: none;
+}
+
+.idc-main-sidebar .share a img {
+    width: 28px;
+    height: 28px;
+}
+
+.idc-main-sidebar .share a span {
+    color: rgba(255, 255, 255, 0.8);
+    padding: 4px;
+    text-transform: uppercase;
+}
+
+@media (max-width: 991px) {
+    .idc-main-sidebar {
+        width: 100%;
+        padding: 8px;
+        flex-direction: row !important;
+        -ms-flex-direction: row !important;
+        -webkit-flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center;
+    }
+
+    .idc-main-sidebar .heading {
+        visibility: collapse;
+        width: 0px;
+        padding: 0px;
+    }
+
+    .idc-main-sidebar .share {
+        vertical-align: middle;
+    }
+
+    .idc-main-sidebar .share a {
+        padding: 4px;
+        vertical-align: middle;
+        margin: auto;
+    }
+
+    .idc-main-sidebar .share a span {
+        visibility: collapse;
+        width: 0px;
+        padding: 0px;
+    }
 }

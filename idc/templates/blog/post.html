@@ -24,7 +24,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#dd1338">
 </head>
 
-<body style=" background-color:#e1e1e1;">
+<body>
 <nav class="idc-navbar navbar navbar-default navbar-fixed-top">
     <div class="idc-navbar-container container-fluid">
 
@@ -53,25 +53,10 @@
         </div>
     </div>
 </nav>
-
-<div class="container idc-main-container">
+<div class="container-fluid idc-main-container">
     <div class="row">
-        <div class="idc-blog-container">
-            {% if post.cover_image == null %}
-                <div class="idc-blog-title">
-                    {{ post.title }}
-                </div>
-            {% else %}
-                <div class="idc-blog-title">
-                    {{ post.title }}
-                </div>
-            {% endif %}
-            <div class="idc-blog-created">
-                {{ post.created_at }}
-            </div>
-
-            <hr/>
-
+        <div class="idc-main-sidebar col-xs-12 col-md-2">
+            <div class="heading">Author</div>
             <div class="idc-blog-author">
                 <div class="idc-author-image-container">
                     {% if post.author.user_profile.picture == null or post.author.user_profile.picture.name == '' %}
@@ -84,6 +69,34 @@
                     <div class="nickname"><a href="{{ BASE_DIR }}/account/profile/{{ post.author.id }}/">@{{ post.author.user_profile.nickname }}</a></div>
                     <div class="name">{{ post.author.first_name }} {{ post.author.last_name }}</div>
                 </div>
+            </div>
+            <div class="heading">Share</div>
+            <div class="share"><a href="">
+                <img src="{% static 'images/icons/facebook.png' %}">
+                <span>Facebook</span>
+            </a></div>
+            <div class="share"><a href="">
+                <img src="{% static 'images/icons/twitter.png' %}">
+                <span>Twitter</span>
+            </a></div>
+            <div class="share"><a href="">
+                <img src="{% static 'images/icons/google+.png' %}">
+                <span>Google+</span>
+            </a></div>
+
+        </div>
+        <div class="idc-blog-container col-xs-12 col-md-10">
+            {% if post.cover_image == null %}
+                <div class="idc-blog-title">
+                    {{ post.title }}
+                </div>
+            {% else %}
+                <div class="idc-blog-title">
+                    {{ post.title }}
+                </div>
+            {% endif %}
+            <div class="idc-blog-created">
+                {{ post.created_at }}
             </div>
 
             <hr/>

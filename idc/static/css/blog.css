@@ -1,9 +1,5 @@
 .idc-blog-container {
     background-color: #ffffff;
-    border-radius: 5px;
-    box-shadow: 0px 1px 5px rgba(100, 100, 100, 10);
-    margin-top: 48px;
-    margin-bottom: 48px;
     padding: 16px;
 }
 
@@ -35,7 +31,9 @@
     flex-direction: row;
     -ms-flex-direction: row;
     -webkit-flex-direction: row;
-    padding: 8px
+    flex-wrap: wrap;
+    padding: 8px;
+    justify-content: center;
 }
 
 .idc-blog-content {
@@ -56,13 +54,13 @@
 }
 
 .idc-author-image-container img {
-    width: 64px !important;
-    height: 64px !important;
+    width: 118px !important;
+    height: 118px !important;
     border-radius: 32px;
 }
 
 .idc-author-details-container {
-    padding: 14px
+    padding: 4px
 }
 
 .idc-author-details-container .nickname a {
@@ -77,7 +75,8 @@
     font-weight: 200;
 }
 
-@media (max-width: 768px) {
+
+@media (max-width: 991px) {
     .idc-blog-container {
         border-radius: 0px;
         box-shadow: none;
@@ -136,4 +135,7 @@
     .idc-blog-content h5 {
         font-size: 15px;
     }
+
+
 }
+

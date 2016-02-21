@@ -1,5 +1,5 @@
 .idc-blogs-grid {
-    padding: 4px;
+    padding: 2px;
 }
 
 .idc-blogs-container hr {
@@ -9,8 +9,6 @@
 
 .idc-blogs-container {
     background-color: #ffffff;
-    border-radius: 2px;
-    box-shadow: 0px 1px 0px rgba(100, 100, 100, 10);
     padding: 12px;
 }
 
