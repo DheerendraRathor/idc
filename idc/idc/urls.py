@@ -21,11 +21,13 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.static import serve
 
+import account.urls
 import blog.urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^blog/', include(blog.urls, namespace='blog')),
+    url(r'^account/', include(account.urls, namespace='account')),
     url(r'^froala_editor/', include(froala_editor.urls)),
 ]
 

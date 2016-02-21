@@ -1,0 +1,80 @@
+.idc-blogs-grid {
+    padding: 4px;
+}
+
+.idc-blogs-container hr {
+    padding: 0px;
+    margin: 0px;
+}
+
+.idc-blogs-container {
+    background-color: #ffffff;
+    border-radius: 2px;
+    box-shadow: 0px 1px 0px rgba(100, 100, 100, 10);
+    padding: 12px;
+}
+
+.idc-blogs-title {
+    font-size: 21px;
+    padding: 4px;
+    font-weight: 400;
+}
+
+.idc-blogs-created {
+    color: #989898;
+    font-size: 12px;
+    padding: 0px 0px 4px 4px;
+}
+
+.idc-blogs-author {
+    display: flex;
+    flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    padding: 4px
+}
+
+.idc-blogs-content {
+    font-size: 14px;
+    padding: 4px;
+    font-style: italic;
+    color: #999999;
+}
+
+.idc-blogs-content,
+.idc-blogs-content h1,
+.idc-blogs-content h2 {
+    font-size: 16px;
+}
+
+.idc-blogs-content h3,
+.idc-blogs-content h4,
+.idc-blogs-content h5 {
+    font-size: 15px;
+}
+
+.idc-blogs-author-image-container img {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 24px;
+}
+
+.idc-blogs-author-details-container {
+    padding: 4px 8px;
+}
+
+.idc-blogs-author-details-container .nickname a {
+    color: #F50057;
+    font-size: 16px;
+    font-weight: 200;
+}
+
+.idc-blogs-author-details-container .name {
+    color: #898989;
+    font-size: 14px;
+    font-weight: 200;
+}
+
+@media (max-width: 768px) {
+
+}

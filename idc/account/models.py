@@ -6,6 +6,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile')
     nickname = models.CharField(max_length=32)
     picture = models.ImageField(null=True, blank=True)
+    cover = models.ImageField(null=True, blank=True)
 
     # Social Accounts
     facebook = models.URLField(null=True, blank=True)

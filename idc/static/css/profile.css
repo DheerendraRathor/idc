@@ -1,88 +1,95 @@
 .idc-profile-container {
-	background-color:#ffffff;
-	border-radius: 5px;
-	box-shadow: 0px 1px 2px rgba(100,100,100, 10);
-	margin-top: 48px;
-	margin-bottom: 48px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 1px 5px rgba(100, 100, 100, 10);
+    margin-top: 48px;
+    margin-bottom: 48px;
 }
 
 .idc-profile-cover {
-	width:100%;
-	border-radius: 5px 5px 0px 0px;
+    width: 100%;
+    border-radius: 5px 5px 0px 0px;
 }
 
 .idc-profile-user-thumbnail {
-	height:240px; 
-	margin-top:-160px;
+    height: 240px;
+    margin-top: -160px;
+    border-radius: 10px;
+    box-shadow: 0px 1px 5px rgba(60, 60, 60, 10);
 }
 
 .idc-profile-images {
-	text-align: center;
+    text-align: center;
 }
 
 .idc-profile-user-information {
-	padding: 24px;
+    padding: 24px;
 }
 
 .idc-profile-user-information .name {
-	text-align: center;
-	font-size: 36px;
-	text-transform: uppercase;
+    color: #898989;
+    text-align: center;
+    font-size: 36px;
+    text-transform: uppercase;
 }
 
 .idc-profile-user-information .nickname {
-	text-align: center;
-	font-size: 24px;
-	color: #039BE5;
+    text-align: center;
+    font-size: 24px;
+    color: #F50057;
 }
 
 .idc-profile-user-links {
-	padding: 24px;
+    padding: 24px;
 }
 
 .idc-profile-user-links .item {
-	padding: 8px;
-	vertical-align: middle;
+    padding: 8px;
+    vertical-align: middle;
 }
+
 .idc-profile-user-links .item img {
-	width: 28px;
-	height: 28px;
-	margin-right: 20px;
+    width: 28px;
+    height: 28px;
+    margin-right: 20px;
 }
 
 .idc-profile-user-links .item a {
-	color: #78909C;
-	font-size: 18px;
-	vertical-align: middle;
+    color: #78909C;
+    font-size: 18px;
+    vertical-align: middle;
 }
 
-@media (max-width: 768px) { 
-	.idc-profile-container {
-		border-radius: 0px;
-		box-shadow: none;
-		margin-top: 0px;
-		margin-bottom: 0px;
-	}
-	.idc-profile-cover {
-		border-radius: 0px;
-	}
-	.idc-profile-user-thumbnail {
-		height:180px; 
-		margin-top:-90px;
-	}
-	.idc-profile-user-information .name {
-		font-size: 24px;
-	}
+@media (max-width: 768px) {
+    .idc-profile-container {
+        border-radius: 0px;
+        box-shadow: none;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
 
-	.idc-profile-user-information .nickname {
-		font-size: 18px;
-	}
+    .idc-profile-cover {
+        border-radius: 0px;
+    }
+
+    .idc-profile-user-thumbnail {
+        height: 180px;
+        margin-top: -90px;
+    }
+
+    .idc-profile-user-information .name {
+        font-size: 24px;
+    }
+
+    .idc-profile-user-information .nickname {
+        font-size: 18px;
+    }
 
 }
 
-@media (max-width: 400px) { 
-	.idc-profile-user-thumbnail {
-		height: 140px; 
-		margin-top:-70px;
-	}
+@media (max-width: 400px) {
+    .idc-profile-user-thumbnail {
+        height: 140px;
+        margin-top: -70px;
+    }
 }

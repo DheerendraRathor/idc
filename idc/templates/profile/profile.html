@@ -1,10 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
+{% load staticfiles %}
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="description" content="IDC Blog">
+    <meta name="author" content="Bijoy Singh Kochar, Dheerendra Rathor"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="IDC, IITB, IIT Bombay">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/common.css' %}" rel="stylesheet">
+    <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+    <link href="{% static 'css/blog.css' %}" rel="stylesheet">
+
+    <meta name="theme-color" content="#dd1338">
+    <meta name="msapplication-navbutton-color" content="#dd1338">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#dd1338">
+</head>
+
+<body style=" background-color:#e1e1e1;">
+<nav class="idc-navbar navbar navbar-default navbar-fixed-top">
+    <div class="idc-navbar-container container-fluid">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <img class="idc-navbar-logo" alt="Brand" src="{% static 'images/idc-logo.jpg' %}">
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">PROFILE</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">LOGOUT</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container idc-main-container">
+    <div class="row">
+        <div class="idc-profile-container">
+            <div class="idc-profile-images">
+
+                {% if user.user_profile.cover == null or user.user_profile.cover.name == '' %}
+                    <img class="idc-profile-cover" src="{% static 'images/placeholder.png' %}"/>
+                {% else %}
+                    <img class="idc-profile-cover" src="{{ user.user_profile.cover.url }}"/>
+                {% endif %}
+
+                {% if user.user_profile.picture == null or user.user_profile.picture.name == '' %}
+                    <img class="idc-profile-user-thumbnail" src="{% static 'images/face_placeholder.png' %}"/>
+                {% else %}
+                    <img class="idc-profile-user-thumbnail" src="{{ user.user_profile.picture.url }}"/>
+                {% endif %}
+
+            </div>
+
+            <div class="idc-profile-user-information">
+                <div class="name">{{ user.first_name }} {{ user.last_name }}</div>
+                <div class="nickname">@{{ user.user_profile.nickname }}</div>
+            </div>
+
+            <hr/>
+
+            <div class="idc-profile-user-links">
+                {% if user.user_profile.twitter != '' %}
+                <div class="item">
+                    <img src="{% static 'images/icons/twitter.png' %}">
+                    <a href="{{ user.user_profile.twitter }}" target="_blank">Twitter Profile</a>
+                </div>
+                {% endif %}
+
+                {% if user.user_profile.facebook != '' %}
+                <div class="item">
+                    <img src="{% static 'images/icons/facebook.png' %}">
+                    <a href="{{ user.user_profile.facebook }}" target="_blank">Facebook Profile</a>
+                </div>
+                {% endif %}
+
+                {% if user.user_profile.google != '' %}
+                <div class="item">
+                    <img src="{% static 'images/icons/google.png' %}">
+                    <a href="{{ user.user_profile.google }}" target="_blank">Google+ Profile</a>
+                </div>
+                {% endif %}
+
+                {% if user.user_profile.blogger != '' %}
+                <div class="item">
+                    <img src="{% static 'images/icons/blogger.png' %}">
+                    <a href="{{ user.user_profile.blogger }}" target="_blank">blogger Profile</a>
+                </div>
+                {% endif %}
+
+                {% if user.user_profile.homepage != '' %}
+                <div class="item">
+                    <img src="{% static 'images/icons/html5.png' %}">
+                    <a href="{{ user.user_profile.homepage }}" target="_blank">Homepage</a>
+                </div>
+                {% endif %}
+
+                {% if user.email != '' %}
+                <div class="item">
+                    <img src="{% static 'images/icons/gmail.png' %}">
+                    <a href="{{ user.email }}" target="_blank">Email Id</a>
+                </div>
+                {% endif %}
+            </div>
+            <div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">&copy; IDC, IIT Bombay</p>
+    </div>
+</footer>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 </body>
 </html>
