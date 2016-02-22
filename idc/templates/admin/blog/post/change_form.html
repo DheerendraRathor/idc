@@ -1,5 +1,5 @@
 {% extends "admin/change_form.html" %}
-{% load i18n admin_urls admin_static admin_modify staticfiles %}
+{% load i18n admin_urls admin_static admin_modify staticfiles mptt_tags %}
 
 {% block extrastyle %}
     <link type="text/css" rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
@@ -50,6 +50,8 @@
                              aria-labelledby="headingOne">
                             <div class="panel-body">
 
+                                <button class="btn btn-primary" id="save_post">Save</button>
+
                             </div>
                         </div>
                     </div>
@@ -66,6 +68,22 @@
                              aria-labelledby="headingTwo">
                             <div class="panel-body">
 
+                                <ul class="list-unstyled">
+                                    {% recursetree categories %}
+                                        <li>
+                                            <input type="checkbox" name="categories"
+                                                   {% if node in original.categories.all %}checked{% endif %}
+                                                   value="{{ node.id }}">
+                                            {{ node.name }}
+                                            {% if not node.is_leaf_node %}
+                                                <ul class="children">
+                                                    {{ children }}
+                                                </ul>
+                                            {% endif %}
+                                        </li>
+                                    {% endrecursetree %}
+                                </ul>
+
                             </div>
                         </div>
                     </div>
@@ -81,7 +99,7 @@
                         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
                              aria-labelledby="headingThree">
                             <div class="panel-body">
-
+                                {{ adminform.form.tags }}
                             </div>
                         </div>
                     </div>
@@ -89,7 +107,7 @@
 
             </div>
             <div class="col-md-9">
-                <h1 contenteditable="true">Title</h1>
+                <h1 id="title" contenteditable="true">{{ original.title }}</h1>
                 <hr>
                 <div>
                     {{ adminform.form.content }}
@@ -102,4 +120,29 @@
             </div>
         </div>
     </div>
+
+    {% block admin_change_form_document_ready %}
+        <script type="text/javascript">
+            (function ($) {
+                $(document).ready(function () {
+                    $("#save_post").click(function(){
+                        var categories_values = $("input[name='categories']:checked").map(function(){
+                            var int_val = parseInt(this.value);
+                            if (!isNaN(int_val)){
+                                return int_val;
+                            }
+                        }).get();
+
+                        var tags = $("select[name='tags']").val();
+
+                        var title = $("#title").val();
+
+                        var content = $("#id_content").val();
+
+                    });
+                });
+            })(django.jQuery);
+        </script>
+    {% endblock %}
+
 {% endblock %}

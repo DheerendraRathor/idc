@@ -4,7 +4,7 @@ from django.forms.widgets import Textarea
 from django_mptt_admin.admin import DjangoMpttAdmin
 from mptt.admin import MPTTModelAdmin
 from simple_history.admin import SimpleHistoryAdmin
-from django_select2.forms import Select2MultipleWidget
+from django_select2.forms import Select2TagWidget
 
 from .models import Category, Comment, Post, Tag
 
@@ -29,7 +29,12 @@ class PostAdmin(SimpleHistoryAdmin):
             'widget': Textarea(attrs={'rows': 3}),
         },
         models.ManyToManyField: {
-            'widget': Select2MultipleWidget(),
+            'widget': Select2TagWidget(
+                attrs={
+                    'data-width': '250px',
+                    'data-maximum-selection-length': 5,
+                }
+            ),
         }
     }
 
@@ -56,6 +61,13 @@ class PostAdmin(SimpleHistoryAdmin):
     move_to_trash.short_description = 'Move posts to recycle bin'
     revive_posts.short_description = 'Recover posts from recycle bin'
 
+    def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+        categories = Category.objects.all()
+        if not extra_context:
+            extra_context = {}
+        extra_context['categories'] = categories
+        return super().changeform_view(request, object_id, form_url, extra_context)
+
 
 class CommentAdmin(MPTTModelAdmin):
     list_display = ['comment', 'author', 'post']
@@ -63,6 +75,17 @@ class CommentAdmin(MPTTModelAdmin):
 
 class TagAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'slug', 'created_by', 'created_at']
+
+    def get_fields(self, request, obj=None):
+        fields = super().get_fields(request, obj)
+        if not request.user.is_superuser:
+            fields.remove('created_by')
+        return fields
+
+    def save_model(self, request, obj, form, change):
+        if not request.user.is_superuser:
+            obj.created_by = request.user
+        return super().save_model(request, obj, form, change)
 
 
 admin.site.register(Post, PostAdmin)
