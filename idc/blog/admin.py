@@ -42,6 +42,10 @@ class PostAdmin(SimpleHistoryAdmin):
         tags = post.tags.all().values_list('name', flat=True)
         return ', '.join(tags)
 
+    def save_model(self, request, obj, form, change):
+        obj.author = request.user
+        return super().save_model(request, obj, form, change)
+
     def move_to_trash(self, request, queryset):
         posts_deleted = queryset.update(removed=True)
         if posts_deleted == 1:

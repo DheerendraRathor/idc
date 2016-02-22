@@ -33,102 +33,107 @@
             {% endif %}
         {% endblock %}
 
-        <div class="row">
-            <div class="col-md-3">
+        <form method="post">
+        {% csrf_token %}
+            <div class="row">
+                <div class="col-md-3">
 
-                <div class="panel-group text-capitalize" id="accordion" role="tablist" aria-multiselectable="true">
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingOne">
-                            <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
-                                   aria-expanded="true" aria-controls="collapseOne">
-                                    Post status
-                                </a>
-                            </h4>
+                    <div class="panel-group text-capitalize" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                                       aria-expanded="true" aria-controls="collapseOne">
+                                        Post status
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                                 aria-labelledby="headingOne">
+                                <div class="panel-body">
+
+                                    <input type="submit" class="btn btn-primary" value="Save" id="save_post"/>
+
+                                </div>
+                            </div>
                         </div>
-                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                             aria-labelledby="headingOne">
-                            <div class="panel-body">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                       href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Categories
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
+                                 aria-labelledby="headingTwo">
+                                <div class="panel-body">
 
-                                <button class="btn btn-primary" id="save_post">Save</button>
+                                    <ul class="list-unstyled">
+                                        {% recursetree categories %}
+                                            <li>
+                                                <input type="checkbox" name="categories"
+                                                       {% if node in original.categories.all %}checked{% endif %}
+                                                       value="{{ node.id }}">
+                                                {{ node.name }}
+                                                {% if not node.is_leaf_node %}
+                                                    <ul class="children">
+                                                        {{ children }}
+                                                    </ul>
+                                                {% endif %}
+                                            </li>
+                                        {% endrecursetree %}
+                                    </ul>
 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                       href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Tags
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
+                                 aria-labelledby="headingThree">
+                                <div class="panel-body">
+                                    {{ adminform.form.tags }}
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingTwo">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
-                                   href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Categories
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
-                             aria-labelledby="headingTwo">
-                            <div class="panel-body">
 
-                                <ul class="list-unstyled">
-                                    {% recursetree categories %}
-                                        <li>
-                                            <input type="checkbox" name="categories"
-                                                   {% if node in original.categories.all %}checked{% endif %}
-                                                   value="{{ node.id }}">
-                                            {{ node.name }}
-                                            {% if not node.is_leaf_node %}
-                                                <ul class="children">
-                                                    {{ children }}
-                                                </ul>
-                                            {% endif %}
-                                        </li>
-                                    {% endrecursetree %}
-                                </ul>
-
-                            </div>
-                        </div>
+                </div>
+                <div class="col-md-9">
+                    <input name="title" id="title" placeholder="Title" value="{{ original.title }}"/>
+                    <hr>
+                    <div>
+                        {{ adminform.form.content }}
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingThree">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
-                                   href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Tags
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
-                             aria-labelledby="headingThree">
-                            <div class="panel-body">
-                                {{ adminform.form.tags }}
-                            </div>
-                        </div>
+                    <hr>
+                    <div class="form-group">
+                    <textarea name="excerpt" rows="3" maxlength="500" class="form-control"
+                              placeholder="Custom excerpt for the post">{{ original.excerpt }}</textarea>
                     </div>
                 </div>
-
             </div>
-            <div class="col-md-9">
-                <h1 id="title" contenteditable="true">{{ original.title }}</h1>
-                <hr>
-                <div>
-                    {{ adminform.form.content }}
-                </div>
-                <hr>
-                <div class="form-group">
-                    <textarea rows="3" maxlength="500" class="form-control"
-                              placeholder="Custom excerpt for the post"></textarea>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
+
 
     {% block admin_change_form_document_ready %}
         <script type="text/javascript">
             (function ($) {
                 $(document).ready(function () {
-                    $("#save_post").click(function(){
-                        var categories_values = $("input[name='categories']:checked").map(function(){
+                    $("#save_post").click(function () {
+
+                        var categories_values = $("input[name='categories']:checked").map(function () {
                             var int_val = parseInt(this.value);
-                            if (!isNaN(int_val)){
+                            if (!isNaN(int_val)) {
                                 return int_val;
                             }
                         }).get();
@@ -138,6 +143,7 @@
                         var title = $("#title").val();
 
                         var content = $("#id_content").val();
+
 
                     });
                 });
