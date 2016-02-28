@@ -1,127 +1,66 @@
-<!DOCTYPE html>
-
+{% extends 'base.html' %}
 {% load staticfiles %}
-
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <meta name="description" content="IDC Blog">
-    <meta name="author" content="Bijoy Singh Kochar, Dheerendra Rathor"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="IDC, IITB, IIT Bombay">
-
-    <title>{% block title %}{% endblock %}</title>
-
-    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/common.css' %}" rel="stylesheet">
-    <link href="{% static 'css/blog.css' %}" rel="stylesheet">
-
-    <meta name="theme-color" content="#dd1338">
-    <meta name="msapplication-navbutton-color" content="#dd1338">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#dd1338">
-</head>
-
-<body class="body">
-<nav class="idc-navbar navbar navbar-default navbar-fixed-top">
-    <div class="idc-navbar-container container-fluid">
-
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed"
-                    data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">
-                <img class="idc-navbar-logo" alt="Brand" src="{% static 'images/idc-logo.png' %}">
-            </a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a href="#">HOME</a></li>
-                <li><a href="#">PROFILE</a></li>
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">LOGOUT</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<div class="container-fluid idc-main-container">
-    <div class="row">
-        <div class="idc-main-sidebar col-xs-12 col-md-2">
-            <div class="heading">Author</div>
-            <div class="idc-blog-author">
-                <div class="idc-author-image-container">
-                    {% if post.author.user_profile.picture == null or post.author.user_profile.picture.name == '' %}
-                        <img src="{% static 'images/face_placeholder.png' %}"/>
-                    {% else %}
-                        <img src="{{ post.author.user_profile.picture.url }}"/>
-                    {% endif %}
+{% block main_container %}
+    <div class="container-fluid idc-main-container">
+        <div class="row">
+            <div class="idc-main-sidebar col-xs-12 col-md-2">
+                <div class="heading">Author</div>
+                <div class="idc-blog-author">
+                    <div class="idc-author-image-container">
+                        {% if post.author.user_profile.picture == null or post.author.user_profile.picture.name == '' %}
+                            <img src="{% static 'images/face_placeholder.png' %}"/>
+                        {% else %}
+                            <img src="{{ post.author.user_profile.picture.url }}"/>
+                        {% endif %}
+                    </div>
+                    <div class="idc-author-details-container">
+                        <div class="nickname"><a
+                                href="{{ BASE_DIR }}/account/profile/{{ post.author.id }}/">@{{ post.author.user_profile.nickname }}</a>
+                        </div>
+                        <div class="name">{{ post.author.first_name }} {{ post.author.last_name }}</div>
+                    </div>
                 </div>
-                <div class="idc-author-details-container">
-                    <div class="nickname"><a href="{{ BASE_DIR }}/account/profile/{{ post.author.id }}/">@{{ post.author.user_profile.nickname }}</a></div>
-                    <div class="name">{{ post.author.first_name }} {{ post.author.last_name }}</div>
-                </div>
+                <div class="heading">Share</div>
+                <div class="share"><a href="">
+                    <img src="{% static 'images/icons/facebook.png' %}">
+                    <span>Facebook</span>
+                </a></div>
+                <div class="share"><a href="">
+                    <img src="{% static 'images/icons/twitter.png' %}">
+                    <span>Twitter</span>
+                </a></div>
+                <div class="share"><a href="">
+                    <img src="{% static 'images/icons/google+.png' %}">
+                    <span>Google+</span>
+                </a></div>
+
             </div>
-            <div class="heading">Share</div>
-            <div class="share"><a href="">
-                <img src="{% static 'images/icons/facebook.png' %}">
-                <span>Facebook</span>
-            </a></div>
-            <div class="share"><a href="">
-                <img src="{% static 'images/icons/twitter.png' %}">
-                <span>Twitter</span>
-            </a></div>
-            <div class="share"><a href="">
-                <img src="{% static 'images/icons/google+.png' %}">
-                <span>Google+</span>
-            </a></div>
-
-        </div>
-        <div class="idc-blog-container col-xs-12 col-md-10">
-            {% if post.cover_image == null %}
-                <div class="idc-blog-title">
-                    {{ post.title }}
+            <div class="idc-blog-container col-xs-12 col-md-10">
+                {% if post.cover_image == null %}
+                    <div class="idc-blog-title">
+                        {{ post.title }}
+                    </div>
+                {% else %}
+                    <div class="idc-blog-title">
+                        {{ post.title }}
+                    </div>
+                {% endif %}
+                <div class="idc-blog-created">
+                    {{ post.created_at }}
                 </div>
-            {% else %}
-                <div class="idc-blog-title">
-                    {{ post.title }}
+
+                <hr/>
+                <div class="idc-blog-content">
+                    {{ post.content|safe }}
                 </div>
-            {% endif %}
-            <div class="idc-blog-created">
-                {{ post.created_at }}
-            </div>
 
-            <hr/>
-            <div class="idc-blog-content">
-                {{ post.content|safe }}
-            </div>
+                <hr/>
 
-            <hr/>
-
-            <div class="idc-blog-comments">
-                <div class="comment"></div>
-                <div class="add-comment"></div>
+                <div class="idc-blog-comments">
+                    <div class="comment"></div>
+                    <div class="add-comment"></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="text-muted">&copy; IDC, IIT Bombay</p>
-    </div>
-</footer>
-
-<script src="http://code.jquery.com/jquery.js"></script>
-<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-
-</body>
-</html>
+{% endblock %}
