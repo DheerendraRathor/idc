@@ -59,10 +59,29 @@
 
 }
 
+.admin-categories {
+    padding-left: 8px;
+}
+
+.admin-categories li {
+    list-style-type: none;
+}
+
+.select2-selection__choice {
+    background-color: #204d74 !important;
+    border: none!important;
+    color: #ffffff!important;
+    padding: 8px 12px!important;
+}
+
+.select2-selection__choice__remove {
+    padding: 0 4px;
+}
+
 .admin-input-title {
-    font-size: 18px;
+    font-size: 18px!important;
     font-weight: bold;
-    color: #2b669a;
+    color: #2b669a!important;
     padding: 8px;
 }
 
