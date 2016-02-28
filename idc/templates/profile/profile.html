@@ -38,7 +38,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">
-                <img class="idc-navbar-logo" alt="Brand" src="{% static 'images/idc-logo.jpg' %}">
+                <img class="idc-navbar-logo" alt="Brand" src="{% static 'images/idc-logo.png' %}">
             </a>
         </div>
 
@@ -173,7 +173,7 @@
                 {% if user.email != '' %}
                     <div class="item">
                         <img src="{% static 'images/icons/gmail.png' %}">
-                        <a href="{{ user.email }}" target="_blank">Email Id</a>
+                        <a href="mailto:{{ user.email }}" target="_blank">Email Id</a>
                     </div>
                 {% endif %}
             </div>

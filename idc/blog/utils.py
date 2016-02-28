@@ -2,14 +2,25 @@
 class PostStatusTypes(object):
     DRAFT = 0
     PRIVATE = 1
-    PUBLISHED = 2
+    REQUESTED = 2
+    PUBLISHED = 3
+
 
     @classmethod
     def dict(cls) -> dict:
         return {
-            cls.DRAFT: 'Draft',
-            cls.PRIVATE: 'Private',
-            cls.PUBLISHED: 'Published',
+            cls.DRAFT: 'Save As Draft',
+            cls.PRIVATE: 'Publish within IIT',
+            cls.REQUESTED: 'Request Pending',
+            cls.PUBLISHED: 'Publish to Public',
+        }
+
+    @classmethod
+    def user_options(cls) -> dict:
+        return {
+            cls.DRAFT: 'Save As Draft',
+            cls.PRIVATE: 'Publish within IIT',
+            cls.PUBLISHED: 'Publish to Public',
         }
 
     @classmethod

@@ -2,7 +2,9 @@
 {% load i18n admin_urls admin_static admin_modify staticfiles mptt_tags %}
 
 {% block branding %}
-    <h1 id="site-name"><a href="{% url 'admin:index' %}">IDC Blog Admin</a></h1>
+    <a href="{% url 'admin:index' %}">
+        <img class="idc-navbar-logo" alt="Brand" src="{% static 'images/idc-logo.png' %}">
+    </a>
 {% endblock %}
 
 {% block usertools %}
@@ -19,7 +21,7 @@
                     <a class="admin-header-button"
                        href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a>
                 {% endif %}
-                <a class="admin-header-button" href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+                <a class="admin-header-button" href="{% url 'admin:logout' %}">{% trans 'Logout' %}</a>
             {% endblock %}
         </div>
     {% endif %}
@@ -79,6 +81,15 @@
                               placeholder="Custom excerpt for the post">{{ original.excerpt }}</textarea>
                     </div>
                     <div class="idc-main-sidebar col-xs-12 col-md-3">
+                        <select class="form-control" name="status">
+                            {% for key, value in status_options.items %}
+                                {% if key == original.status %}
+                                    <option value="{{ key }}" selected>{{ value }}</option>
+                                {% else %}
+                                    <option value="{{ key }}">{{ value }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
                         <div class="panel-group text-capitalize" id="accordion" role="tablist"
                              aria-multiselectable="true">
                             <div class="panel panel-default">
@@ -95,7 +106,6 @@
                                      aria-labelledby="headingOne">
                                     <div class="panel-body">
 
-                                        <input type="submit" class="btn btn-primary" value="Save" id="save_post"/>
 
                                     </div>
                                 </div>
@@ -151,7 +161,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        <input type="submit" class="btn btn-danger admin-submit-button" value="Save" id="save_post"/>
                     </div>
                 </div>
             </div>

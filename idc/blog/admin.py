@@ -2,10 +2,11 @@ from django.contrib import admin, messages
 from django.db import models
 from django.forms.widgets import Textarea
 from django_mptt_admin.admin import DjangoMpttAdmin
+from django_select2.forms import Select2TagWidget
 from mptt.admin import MPTTModelAdmin
 from simple_history.admin import SimpleHistoryAdmin
-from django_select2.forms import Select2TagWidget
 
+from blog.utils import PostStatusTypes
 from .models import Category, Comment, Post, Tag
 
 
@@ -30,10 +31,10 @@ class PostAdmin(SimpleHistoryAdmin):
         },
         models.ManyToManyField: {
             'widget': Select2TagWidget(
-                attrs={
-                    'data-width': '250px',
-                    'data-maximum-selection-length': 5,
-                }
+                    attrs={
+                        'data-width': '250px',
+                        'data-maximum-selection-length': 5,
+                    }
             ),
         }
     }
@@ -42,8 +43,12 @@ class PostAdmin(SimpleHistoryAdmin):
         tags = post.tags.all().values_list('name', flat=True)
         return ', '.join(tags)
 
-    def save_model(self, request, obj, form, change):
+    def save_model(self, request, obj: Post, form, change):
         obj.author = request.user
+        if Post.objects.filter(pk=obj.pk).count() != 0 and \
+            Post.objects.filter(pk=obj.pk).first().status != PostStatusTypes.PUBLISHED and \
+            obj.status == PostStatusTypes.PUBLISHED:
+            obj.status = PostStatusTypes.REQUESTED
         return super().save_model(request, obj, form, change)
 
     def move_to_trash(self, request, queryset):
@@ -70,11 +75,13 @@ class PostAdmin(SimpleHistoryAdmin):
         if not extra_context:
             extra_context = {}
         extra_context['categories'] = categories
+        extra_context['status_options'] = PostStatusTypes.user_options()
         return super().changeform_view(request, object_id, form_url, extra_context)
 
 
 class CommentAdmin(MPTTModelAdmin):
     list_display = ['comment', 'author', 'post']
+
 
 class TagAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'slug', 'created_by', 'created_at']
