@@ -76,7 +76,6 @@ class PostAdmin(SimpleHistoryAdmin):
 class CommentAdmin(MPTTModelAdmin):
     list_display = ['comment', 'author', 'post']
 
-
 class TagAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'slug', 'created_by', 'created_at']
 
