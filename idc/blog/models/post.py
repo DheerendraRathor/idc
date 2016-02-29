@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.db import models
 from froala_editor.fields import FroalaField
 from simple_history.models import HistoricalRecords
@@ -25,3 +26,7 @@ class Post(models.Model):
 
     def __str__(self):
         return (self.title[:50] + '...') if len(self.title) > 50 else self.title
+
+    def get_absolute_url(self):
+        url = reverse('blog:post', args=[self.id, ])
+        return url
