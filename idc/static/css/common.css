@@ -17,6 +17,14 @@
     background-color: #313443;
 }
 
+.white-body {
+    background-color: #FFFFFF;
+}
+
+.gray-body {
+    background-color: #E0E0E0;
+}
+
 .idc-main-sidebar {
     display: flex;
     flex-direction: column;

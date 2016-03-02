@@ -26,10 +26,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#dd1338">
 </head>
 
-<body class="body">
+<body class="{% block body_class %}body{% endblock %}">
 <nav class="idc-navbar navbar navbar-default navbar-fixed-top">
     <div class="idc-navbar-container container-fluid">
-
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed"
                     data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -45,14 +44,20 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#">TOP</a></li>
-                <li><a href="#">RECENT</a></li>
-                <li><a href="#">PROFILE</a></li>
-                <li><a href="#">ADMIN</a></li>
+                <li><a href="{{ BASE_DIR }}/blog/posts/2/">TOP</a></li>
+                <li><a href="{{ BASE_DIR }}/blog/posts/1/">RECENT</a></li>
+                {% if request.user.is_authenticated %}
+                    <li><a href="{{ BASE_DIR }}/account/profile/{{ request.user.user_profile.id }}/">PROFILE</a></li>
+                    <li><a href="{{ BASE_DIR }}/admin/">ADMIN</a></li>
+                {% endif %}
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">LOGOUT</a></li>
+                {% if request.user.is_authenticated %}
+                    <li><a href="{{ BASE_DIR }}/logout/">LOGOUT</a></li>
+                {% else %}
+                    <li><a href="#">LOGIN</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>

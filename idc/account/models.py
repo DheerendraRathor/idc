@@ -4,7 +4,7 @@ from django.db import models
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile')
-    nickname = models.CharField(max_length=32)
+    nickname = models.CharField(max_length=24)
     about = models.TextField(blank=True, null=True)
     picture = models.ImageField(null=True, blank=True)
     cover = models.ImageField(null=True, blank=True)

@@ -6,5 +6,5 @@ urlpatterns = [
     url(r'post/(?P<pk>\d+)/$', BlogPostView.as_view(), name='post'),
     url(r'posts/$', BlogPostsView.as_view(), name='posts'),
     url(r'posts/(?P<option>\d+)/$', BlogPostsView.as_view(), name='post-option'),
-    url(r'posts/(?P<option>\d+)/(?P<view>\d+)/$', BlogPostsView.as_view(), name='post-option-view'),
+    url(r'posts/(?P<option>\d+)/(?P<count>\d+)/$', BlogPostsView.as_view(), name='post-option-count'),
 ]

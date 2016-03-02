@@ -1,15 +1,29 @@
+.idc-left-blog-sidebar {
+    border-right: 2px solid #BDBDBD;
+}
+
+.idc-top-blog {
+    padding: 16px 12px;
+}
+
 .idc-blogs-grid {
-    padding: 2px;
+    margin: 0;
+    border-bottom: 2px solid #BDBDBD;
+    width: 100%;
 }
 
 .idc-blogs-container hr {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
 }
 
 .idc-blogs-container {
     background-color: #ffffff;
     padding: 12px;
+}
+
+.idc-blogs-title a {
+    color: #000000;
 }
 
 .idc-blogs-title {
@@ -37,6 +51,7 @@
     padding: 4px;
     font-style: italic;
     color: #999999;
+    text-align: justify;
 }
 
 .idc-blogs-content,
@@ -73,6 +88,35 @@
     font-weight: 200;
 }
 
-@media (max-width: 768px) {
+.idc-blogs-tags {
+    padding: 4px;
+}
 
+.idc-blogs-tags span {
+    color: #ED5A8E;
+    padding: 4px;
+    font-size: 16px;
+}
+
+@media (max-width: 992px) {
+    .idc-left-blog-sidebar {
+        border-right: none;
+    }
+
+    .idc-blogs-grid {
+        border-bottom: none;
+        border-top: 2px solid #BDBDBD;
+        width: 50%;
+    }
+
+    .idc-blogs-grid {
+        margin: 0;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .idc-blogs-grid {
+        width: 100%;
+    }
 }

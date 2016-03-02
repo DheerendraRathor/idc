@@ -1,5 +1,5 @@
 import copy
-from typing import List
+import re
 
 from django.contrib import admin, messages
 from django.contrib.admin.options import csrf_protect_m
@@ -19,8 +19,14 @@ class CategoryAdmin(DjangoMpttAdmin):
     use_context_menu = True
 
 
+def clean_html(raw_html):
+    clean_regex = re.compile('<.*?>')
+    clean_text = re.sub(clean_regex, '', raw_html)
+    return clean_text
+
+
 class PostAdmin(SimpleHistoryAdmin):
-    list_display = ['__str__', 'author', 'post_tags', 'created_at', 'modified_at', 'status', 'removed']
+    list_display = ['__str__', 'author', 'modified_at', 'status', 'removed']
     list_filter = ['categories', 'status', 'removed']
     search_fields = ['title', 'excerpt', 'content', 'tags']
     list_editable = ['status', 'removed', ]
@@ -35,10 +41,10 @@ class PostAdmin(SimpleHistoryAdmin):
         },
         models.ManyToManyField: {
             'widget': Select2TagWidget(
-                attrs={
-                    'data-width': '250px',
-                    'data-maximum-selection-length': 5,
-                }
+                    attrs={
+                        'data-width': '250px',
+                        'data-maximum-selection-length': 5,
+                    }
             ),
         }
     }
@@ -53,6 +59,10 @@ class PostAdmin(SimpleHistoryAdmin):
     def save_model(self, request, obj: Post, form, change):
         if not obj.author:
             obj.author = request.user
+
+        if not obj.excerpt:
+            paragraph = clean_html(obj.content)
+            obj.excerpt = paragraph[:min(len(paragraph) - 1, 256)]
 
         if (obj.pk and
                     Post.objects.get(pk=obj.pk).status != PostStatusTypes.PUBLISHED and

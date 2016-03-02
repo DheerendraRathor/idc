@@ -18,18 +18,61 @@
     padding: 0 !important;
 }
 
-#content .module {
-    margin: 10px;
-    border-radius: 4px;
+#content-related {
+    flex-grow: 1;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: transparent;
+}
+
+#changelist-filter {
+    position: relative !important;
+    padding: 12px;
+    background-color: transparent !important;
+}
+
+#changelist-filter h2 {
+    color: #1565C0;
+    background-color: transparent;
+    font-size: 16px !important;
+}
+
+.filtered,
+.filtered > div,
+.filtered > p,
+#changelist-form,
+#changelist-form > div,
+#changelist-form > p {
+    margin: 0 !important;
+}
+
+.idc-admin-main-contents {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#content-related h2 {
+
+}
+
+#content-main {
+    flex-grow: 3;
+    width: auto !important;
 }
 
 .vTextField,
 .vURLField,
 .vLargeTextField {
-    padding: 12px!important;
-    border: none!important;
+    padding: 12px !important;
+    border: none !important;
     border-radius: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2)!important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2) !important;
+}
+
+#content .module {
+    margin: 10px;
+    border-radius: 4px;
 }
 
 #content .module caption {
@@ -39,10 +82,35 @@
     font-size: 16px;
 }
 
+#content .module table {
+    width: 100%;
+}
+
 #content .module td,
 #content .module th {
     padding: 12px;
     font-size: 14px;
+    width: auto !important;
+}
+
+.tools {
+    margin: 0 !important;
+    width: 100%;
+    background-color: #404459;
+    display: inline-block;
+}
+
+.object-tools {
+    float: none;
+    width: 100%;
+    margin: 0 !important;
+    list-style-type: none;
+    padding: 0 16px;
+    box-shadow: 0 1px 5px rgba(50, 50, 50, 0.95);
+}
+
+.object-tools li {
+    height: auto;
 }
 
 .object-tools li a:link,
@@ -84,7 +152,6 @@
 
 #content > h1 {
     font-size: large;
-    width: 100%;
     text-transform: uppercase;
     padding: 16px 16px 16px 36px;
     color: #ffffff;
@@ -131,10 +198,14 @@
     border: none !important;
     color: #ffffff !important;
     padding: 8px 12px !important;
+    list-style-type: none;
+    font-size: 16px;
 }
 
 .select2-selection__choice__remove {
-    padding: 0 4px;
+    padding: 0 6px 0 0;
+    font-size: 16px;
+    color: #ffffff !important;
 }
 
 .admin-input-title {

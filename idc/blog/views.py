@@ -13,21 +13,33 @@ class BlogPostView(TemplateView):
                 Post,
                 pk=pk
         )
+
+        post.increment_views()
+
         kwargs['post'] = post
         return super().get(request, *args, **kwargs)
 
 class BlogPostsView(TemplateView):
-    PUBLIC = 1
-    PRIVATE = 2
-    BOTH = 3
-
     RECENT = 1
+    TOP = 2
 
     template_name = 'blog/blogs.html'
 
     def get(self, request, *args, **kwargs):
         option = kwargs.pop('option', self.RECENT)
-        view = kwargs.pop('view', self.BOTH)
-        posts = Post.objects.order_by('-created_at')[:10]
-        kwargs['posts'] = posts
+        count = kwargs.pop('count', 12)
+
+        if option == self.RECENT:
+            posts = Post.objects.order_by('-created_at')[:count]
+        elif option == self.TOP:
+            posts = Post.objects.order_by('-views')[:count]
+        else:
+            posts = Post.objects.all()[:count]
+
+        top_post = posts[0]
+        top_post.increment_views()
+
+        kwargs['post'] = top_post
+        kwargs['posts'] = posts[1:]
+
         return super().get(request, *args, **kwargs)

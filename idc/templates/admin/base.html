@@ -9,6 +9,7 @@
           href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}"/>
     <link type="text/css" rel="stylesheet" href="{% static 'css/common.css' %}"/>
     <link type="text/css" rel="stylesheet" href="{% static 'css/admin.css' %}"/>
+<link type="text/css" rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
     {% block extrastyle %}{% endblock %}
     {% if LANGUAGE_BIDI %}
         <link rel="stylesheet" type="text/css"
@@ -26,7 +27,6 @@
 <div id="container" class="idc-admin">
 
     {% if not is_popup %}
-        <!-- Header -->
         <div id="header">
             <div id="branding">
                 {% block branding %}{% endblock %}
@@ -54,7 +54,7 @@
 
             {% block nav-global %}{% endblock %}
         </div>
-        <!-- END Header -->
+
         {% block breadcrumbs %}
             <div class="breadcrumbs">
                 <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
@@ -75,12 +75,14 @@
     <div id="content" class="{% block coltype %}colM{% endblock %}">
         {% block pretitle %}{% endblock %}
         {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
-        {% block content %}
-            {% block object-tools %}{% endblock %}
-            {{ content }}
-        {% endblock %}
-        {% block sidebar %}{% endblock %}
-        <br class="clear"/>
+        <div class="tools">{% block object-tools %}{% endblock %}</div>
+        <div class="idc-admin-main-contents">
+            {% block content %}
+                {{ content }}
+            {% endblock %}
+            {% block sidebar %}{% endblock %}
+            <br class="clear"/>
+        </div>
     </div>
     <!-- END Content -->
 

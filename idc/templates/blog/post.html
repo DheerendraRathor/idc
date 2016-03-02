@@ -14,8 +14,8 @@
                         {% endif %}
                     </div>
                     <div class="idc-author-details-container">
-                        <div class="nickname"><a
-                                href="{{ BASE_DIR }}/account/profile/{{ post.author.id }}/">@{{ post.author.user_profile.nickname }}</a>
+                        <div class="nickname">
+                            <a href="{{ BASE_DIR }}/account/profile/{{ post.author.id }}/">@{{ post.author.user_profile.nickname }}</a>
                         </div>
                         <div class="name">{{ post.author.first_name }} {{ post.author.last_name }}</div>
                     </div>
@@ -50,7 +50,13 @@
                     {{ post.created_at }}
                 </div>
 
+                <div class="idc-blog-tags">
+                    {% for tag in post.tags.all %}
+                        <span>#{{ tag }}</span>
+                    {% endfor %}
+                </div>
                 <hr/>
+
                 <div class="idc-blog-content">
                     {{ post.content|safe }}
                 </div>
