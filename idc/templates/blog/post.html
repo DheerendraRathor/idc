@@ -36,12 +36,13 @@
 
             </div>
             <div class="idc-blog-container col-xs-12 col-md-10">
-                {% if post.cover_image == null %}
+                {% if post.cover_image == null or post.cover_image.name == '' %}
                     <div class="idc-blog-title">
                         {{ post.title }}
                     </div>
                 {% else %}
-                    <div class="idc-blog-title">
+                    <div class="idc-blog-title idc-cover-blog-title">
+                        <img src="{{ post.cover_image.url }}"/>
                         {{ post.title }}
                     </div>
                 {% endif %}
