@@ -1,5 +1,9 @@
+import copy
+from typing import List
+
 from django.contrib import admin, messages
-from django.db import models
+from django.contrib.admin.options import csrf_protect_m
+from django.db import models, transaction
 from django.forms.widgets import Textarea
 from django_mptt_admin.admin import DjangoMpttAdmin
 from django_select2.forms import Select2TagWidget
@@ -31,23 +35,29 @@ class PostAdmin(SimpleHistoryAdmin):
         },
         models.ManyToManyField: {
             'widget': Select2TagWidget(
-                    attrs={
-                        'data-width': '250px',
-                        'data-maximum-selection-length': 5,
-                    }
+                attrs={
+                    'data-width': '250px',
+                    'data-maximum-selection-length': 5,
+                }
             ),
         }
     }
 
+    def save_form(self, request, form, change):
+        return super().save_form(request, form, change)
+
     def post_tags(self, post: Post):
-        tags = post.tags.all().values_list('name', flat=True)
+        tags = post.tags.all().values_list('slug', flat=True)
         return ', '.join(tags)
 
     def save_model(self, request, obj: Post, form, change):
-        obj.author = request.user
-        if (Post.objects.filter(pk=obj.pk).count() != 0 and
-            Post.objects.filter(pk=obj.pk).first().status != PostStatusTypes.PUBLISHED and
-            obj.status == PostStatusTypes.PUBLISHED):
+        if not obj.author:
+            obj.author = request.user
+
+        if (obj.pk and
+                    Post.objects.get(pk=obj.pk).status != PostStatusTypes.PUBLISHED and
+                    obj.status == PostStatusTypes.PUBLISHED and
+                not request.user.is_superuser):
             obj.status = PostStatusTypes.REQUESTED
         return super().save_model(request, obj, form, change)
 
@@ -70,12 +80,39 @@ class PostAdmin(SimpleHistoryAdmin):
     move_to_trash.short_description = 'Move posts to recycle bin'
     revive_posts.short_description = 'Recover posts from recycle bin'
 
+    @csrf_protect_m
+    @transaction.atomic
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
         categories = Category.objects.all()
         if not extra_context:
             extra_context = {}
         extra_context['categories'] = categories
         extra_context['status_options'] = PostStatusTypes.user_options()
+
+        # This entire block is a dangerous hack. Please read it on your own risk
+        if request.method == 'POST':
+
+            tags = list(set(request.POST.getlist('tags')))[:5]  # type: List(str)
+            original_tags = copy.deepcopy(tags)
+
+            existing_tags = Tag.objects.all().filter(pk__in=[tag for tag in tags if tag.isdigit()])
+            et_pk = [str(tag.pk) for tag in existing_tags]
+
+            for tag in original_tags:
+                if tag not in et_pk:
+                    new_tag = Tag(slug=tag, created_by=request.user)
+                    new_tag.save()
+                    et_pk.append(str(new_tag.pk))
+
+            request.POST = request.POST.copy()
+
+            if len(et_pk) > 0:
+                request.POST['tags'] = et_pk[0]
+            for pk in et_pk[1:]:
+                request.POST.update({
+                    'tags': pk,
+                })
+
         return super().changeform_view(request, object_id, form_url, extra_context)
 
     def get_queryset(self, request):
@@ -94,13 +131,14 @@ class CommentAdmin(MPTTModelAdmin):
             qs = qs.filter(author=request.user)
         return qs
 
+
 class TagAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description', 'slug', 'created_by', 'created_at']
+    list_display = ['slug', 'created_by', 'created_at']
 
     def get_fields(self, request, obj=None):
         fields = super().get_fields(request, obj)
         if not request.user.is_superuser:
-            fields.remove('created_by')
+            fields.remove('created_by', 'created_at')
         return fields
 
     def save_model(self, request, obj, form, change):
