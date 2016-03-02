@@ -1,6 +1,6 @@
 .idc-blog-container {
     background-color: #ffffff;
-    padding: 16px;
+    padding: 0;
 }
 
 .idc-blog-container hr {
@@ -18,12 +18,10 @@
     color: #000000;
 }
 
-.idc-cover-blog-title {
-    padding: 0;
-}
-
-.idc-cover-blog-title img {
-    width: 100%;
+.idc-cover-image {
+    width: 100% !important;
+    margin: 0 !important;
+    margin-bottom: 12px !important;
 }
 
 .idc-blog-created {
@@ -32,7 +30,7 @@
     padding: 0px 0px 16px 16px;
 }
 
-.idc-blog-container img {
+.idc-top-blog-content img {
     width: 75% !important;
     display: block;
     margin: 12px auto;

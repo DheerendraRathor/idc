@@ -46,7 +46,7 @@
                                 <a class="admin-header-button"
                                    href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a>
                             {% endif %}
-                            <a class="admin-header-button" href="{% url 'admin:logout' %}">{% trans 'Logout' %}</a>
+                            <a class="admin-header-button" href="{% url 'admin:logout' %}?next=/blog/posts/">{% trans 'Logout' %}</a>
                         {% endblock %}
                     </div>
                 {% endif %}

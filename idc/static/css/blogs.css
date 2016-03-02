@@ -1,9 +1,14 @@
 .idc-left-blog-sidebar {
     border-right: 2px solid #BDBDBD;
+    padding: 0;
 }
 
 .idc-top-blog {
-    padding: 16px 12px;
+    padding: 0;
+}
+
+.idc-top-blog-content {
+    padding: 16px;
 }
 
 .idc-blogs-grid {
@@ -43,7 +48,7 @@
     flex-direction: row;
     -ms-flex-direction: row;
     -webkit-flex-direction: row;
-    padding: 4px
+    padding: 8px
 }
 
 .idc-blogs-content {

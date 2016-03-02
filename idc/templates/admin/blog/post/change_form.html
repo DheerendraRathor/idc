@@ -53,6 +53,11 @@
                               placeholder="Custom excerpt for the post">{{ original.excerpt }}</textarea>
                     </div>
                     <div class="idc-main-sidebar col-xs-12 col-md-3">
+                        <div class="heading admin-input-title">Cover Picture</div>
+                        {% if original.cover_image and original.cover_image.url %}
+                            <img src="{{ original.cover_image.url }}" style="width: 100%; height: 160px;">
+                        {% endif %}
+                        <input id="id_cover_image" name="cover_image" type="file"/>
 
                         <div class="heading admin-input-title">Post Status</div>
                         <select class="form-control" name="status">

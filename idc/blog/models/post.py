@@ -11,7 +11,7 @@ from ..utils import PostStatusTypes
 
 class Post(models.Model):
     author = models.ForeignKey(User, related_name='posts', blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     modified_at = models.DateTimeField(auto_now=True)
     cover_image = models.ImageField(upload_to='post', null=True, blank=True)
     title = models.TextField(help_text='Title of post')
@@ -34,5 +34,7 @@ class Post(models.Model):
         return url
 
     def increment_views(self):
+        if not self.views:
+            self.views = 0
         self.views = self.views + 1
         self.save()

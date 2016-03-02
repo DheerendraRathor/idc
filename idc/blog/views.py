@@ -40,6 +40,6 @@ class BlogPostsView(TemplateView):
         top_post.increment_views()
 
         kwargs['post'] = top_post
-        kwargs['posts'] = posts[1:]
+        kwargs['posts'] = posts[:]
 
         return super().get(request, *args, **kwargs)
