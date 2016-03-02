@@ -45,9 +45,9 @@ class PostAdmin(SimpleHistoryAdmin):
 
     def save_model(self, request, obj: Post, form, change):
         obj.author = request.user
-        if Post.objects.filter(pk=obj.pk).count() != 0 and \
-            Post.objects.filter(pk=obj.pk).first().status != PostStatusTypes.PUBLISHED and \
-            obj.status == PostStatusTypes.PUBLISHED:
+        if (Post.objects.filter(pk=obj.pk).count() != 0 and
+            Post.objects.filter(pk=obj.pk).first().status != PostStatusTypes.PUBLISHED and
+            obj.status == PostStatusTypes.PUBLISHED):
             obj.status = PostStatusTypes.REQUESTED
         return super().save_model(request, obj, form, change)
 
@@ -78,10 +78,21 @@ class PostAdmin(SimpleHistoryAdmin):
         extra_context['status_options'] = PostStatusTypes.user_options()
         return super().changeform_view(request, object_id, form_url, extra_context)
 
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        if not request.user.is_superuser:
+            queryset = queryset.filter(author=request.user)
+        return queryset
+
 
 class CommentAdmin(MPTTModelAdmin):
     list_display = ['comment', 'author', 'post']
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if not request.user.is_superuser:
+            qs = qs.filter(author=request.user)
+        return qs
 
 class TagAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'slug', 'created_by', 'created_at']
@@ -96,6 +107,12 @@ class TagAdmin(admin.ModelAdmin):
         if not request.user.is_superuser:
             obj.created_by = request.user
         return super().save_model(request, obj, form, change)
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if not request.user.is_superuser:
+            qs = qs.filter(created_by=request.user)
+        return qs
 
 
 admin.site.register(Post, PostAdmin)
