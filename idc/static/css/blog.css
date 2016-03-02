@@ -13,6 +13,12 @@
     padding: 4px 16px;
     font-weight: 400;
 }
+.idc-cover-blog-title {
+    padding: 0;
+}
+.idc-cover-blog-title img {
+    width: 100%;
+}
 
 .idc-blog-created {
     color: #989898;
