@@ -16,7 +16,6 @@ class BlogPostView(TemplateView):
         kwargs['post'] = post
         return super().get(request, *args, **kwargs)
 
-
 class BlogPostsView(TemplateView):
     PUBLIC = 1
     PRIVATE = 2
