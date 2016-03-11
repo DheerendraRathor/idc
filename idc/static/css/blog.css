@@ -95,6 +95,28 @@
     font-size: 18px;
 }
 
+.idc-blog-comments {
+    width: 80%;
+    background-color: rgba(240, 240, 240, 0.2);
+    padding: 16px;
+    margin: auto;
+}
+
+.idc-blog-comments .comment table {
+    height: 24px;
+}
+
+.idc-blog-comments .comment .nickname a {
+    color: #F50057;
+    padding: 8px;
+    font-size: 16px;
+}
+
+.idc-blog-comments .comment .comment-content {
+    padding: 16px 0;
+    font-size: 12px;
+}
+
 @media (max-width: 991px) {
     .idc-blog-container {
         border-radius: 0px;
@@ -153,5 +175,9 @@
     .idc-blog-content h4,
     .idc-blog-content h5 {
         font-size: 15px;
+    }
+
+    .idc-blog-comments {
+        width: 100%;
     }
 }

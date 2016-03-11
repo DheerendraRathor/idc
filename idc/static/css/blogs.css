@@ -71,6 +71,12 @@
     font-size: 15px;
 }
 
+.idc-comments-author-image-container img {
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 12px;
+}
+
 .idc-blogs-author-image-container img {
     width: 48px !important;
     height: 48px !important;
