@@ -117,6 +117,21 @@
     font-size: 12px;
 }
 
+.idc-comments-form {
+    width: 100%;
+}
+.idc-comments-form label {
+    visibility: collapse;
+    width: 0;
+}
+
+.idc-comments-form textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #BDBDBD;
+}
+
+
 @media (max-width: 991px) {
     .idc-blog-container {
         border-radius: 0px;

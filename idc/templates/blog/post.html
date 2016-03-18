@@ -62,46 +62,37 @@
 
                     <div class="idc-blog-comments">
                         <div class="idc-blog-title">Comments</div>
-                        <div class="add-comment"></div>
-                        <div class="comment">
-                            <table>
-                                <tr>
-                                    <td class="idc-comments-author-image-container">
-                                        <img src="{% static 'images/face_placeholder.png' %}"/>
-                                    </td>
-                                    <td class="nickname"><a href="">@BijoySingh</a></td>
-                                </tr>
-                            </table>
-                            <div class="comment-content">
-                                Hello, from the other side! Hvala bulgarzem filozofiaf eda na. Vi
-                                brat robit cxtirsto tot, ne nocx zapalit utratili ili, dumam takai
-                                laskajut to tri. Domo kontainerf den ti, dumam gramatik din iz. Perv
-                                imame razumijut sos bi, to ozeros razumim sam. Ne sol ovocxju jazikas,
-                                vi dva belju libktor. Ocxis primer darijte bu dom, voz so zavod lubime
-                                sestra, esli umivalnaf voz ja.
-                            </div>
+                        {% if request.user.is_authenticated %}
+                            <form class="idc-comments-form" role="form" method="post">
+                                {% csrf_token %}
+                                {{ comment_form }}
+                                <input type="submit" class="btn btn-default" value="POST">
+                            </form>
                             <hr/>
-                        </div>
-                        <div class="comment">
-                            <table>
-                                <tr>
-                                    <td class="idc-comments-author-image-container">
-                                        <img src="{% static 'images/face_placeholder.png' %}"/>
-                                    </td>
-                                    <td class="nickname"><a href="">@BijoySingh</a></td>
-                                </tr>
-                            </table>
-                            <div class="comment-content">
-                                Hello, from the other side! Hvala bulgarzem filozofiaf eda na. Vi
-                                brat robit cxtirsto tot, ne nocx zapalit utratili ili, dumam takai
-                                laskajut to tri. Domo kontainerf den ti, dumam gramatik din iz. Perv
-                                imame razumijut sos bi, to ozeros razumim sam. Ne sol ovocxju jazikas,
-                                vi dva belju libktor. Ocxis primer darijte bu dom, voz so zavod lubime
-                                sestra, esli umivalnaf voz ja.
-                            </div>
-                            <hr/>
-                        </div>
+                        {% endif %}
 
+                        <div class="add-comment"></div>
+                        {% for comment in comments %}
+                            <div class="comment">
+                                <table>
+                                    <tr>
+                                        <td class="idc-comments-author-image-container">
+                                            {% if comment.author.user_profile.picture == null or comment.author.user_profile.picture.name == '' %}
+                                                <img src="{% static 'images/face_placeholder.png' %}"/>
+                                            {% else %}
+                                                <img src="{{ comment.author.user_profile.picture.url }}"/>
+                                            {% endif %}
+                                        </td>
+                                        <td class="nickname"><a href="">@{{ comment.author.user_profile.nickname }}</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="comment-content">
+                                    {{ comment.comment }}
+                                </div>
+                                <hr/>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

@@ -24,8 +24,11 @@ from django.views.static import serve
 import account.urls
 import blog.urls
 
+from .views import IndexView
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', IndexView.as_view(), name='index'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/blog/posts/'}),
     url(r'^blog/', include(blog.urls, namespace='blog')),
     url(r'^account/', include(account.urls, namespace='account')),
