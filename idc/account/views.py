@@ -1,14 +1,14 @@
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 from django.views.generic import TemplateView, View
 from oauth.authorization import Authorization
 from oauth.exceptions import OAuthError
-from oauth.models import OAuthToken
-from oauth.request import UserFieldAPIRequest, OAuthObject
+from oauth.request import UserFieldAPIRequest
 
 
 class UserProfileView(TemplateView):
@@ -16,6 +16,13 @@ class UserProfileView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         pk = kwargs.pop('pk', None)
+
+        if not pk:
+            if request.user.is_authenticated():
+                pk = request.user.id
+            else:
+                return redirect(reverse('index'))
+
         user = get_object_or_404(
                 User,
                 pk=pk
@@ -41,7 +48,7 @@ class SSOAuthorizationView(View):
         if not token:
             return render(request, 'login.html', {'client_id': settings.CLIENT_ID})
 
-        user_data = UserFieldAPIRequest(
+        user_obj = UserFieldAPIRequest(
             fields=[
                 'id',
                 'first_name',
@@ -49,12 +56,10 @@ class SSOAuthorizationView(View):
                 'email',
                 'username',
             ],
-            token=token
-        )
+            access_token=token.access_token,
+        ).get_oauth_user()
 
-        user_obj = OAuthObject(user_data)
-
-        user, created = User.objects.get_or_create(username=user_data.username)
+        user, created = User.objects.get_or_create(username=user_obj.username)
         user.set_unusable_password()
 
         user.backend = 'django.contrib.auth.backends.ModelBackend'

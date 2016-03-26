@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django_mptt_admin',
     'froala_editor',
     'django_select2',
+    'oauth',
     'account',
     'blog',
 ]
@@ -111,3 +112,5 @@ STATICFILES_DIRS = (
     # Add all static files here. use os.path.join(BASE_DIR, 'your/staticfile/path')
     os.path.join(BASE_DIR, 'static/'),
 )
+
+LOGIN_REDIRECT_URL = 'account:self_profile'
