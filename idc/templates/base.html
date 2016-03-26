@@ -56,7 +56,7 @@
                 {% if request.user.is_authenticated %}
                     <li><a href="{{ BASE_DIR }}/logout/">LOGOUT</a></li>
                 {% else %}
-                    <li><a href="#">LOGIN</a></li>
+                    <div id="sso-root"></div>
                 {% endif %}
             </ul>
         </div>
@@ -75,5 +75,17 @@
 
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="http://gymkhana.iitb.ac.in/sso/static/widget/js/login.min.js" type="application/javascript"></script>
+<script type="application/javascript">
+
+        new SSO_JS({
+            config: {
+                client_id: 'nQG40LFXCX3GOmqvNSZOhdl6KFr8HWO49fAhviKs',   // Compulsory
+                scope: ['basic', 'profile', 'ldap', ],    // Optional. Default is  ['basic']
+            }
+        }).init();
+
+    </script>
+
 </body>
 </html>

@@ -19,3 +19,15 @@ DB_PORT = '5432'
 ADMINS_EMAIL_LIST = [
     # ('Name', 'email@example.com'),
 ]
+
+CLIENT_SECRET = 'CLIENT_SECRET'
+
+CLIENT_ID = 'CLIENT_ID'
+
+OAUTH_BASE_URL = 'http://gymkhana.iitb.ac.in/sso/'
+
+MINIMUM_SCOPES = ['basic']
+
+DEFAULT_REDIRECT_URI = ''
+
+DEFAULT_FIELDS = ['id']
