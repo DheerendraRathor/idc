@@ -1,6 +1,8 @@
+from typing import Tuple
+
 from django.conf import settings
 from django.contrib import auth
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -9,6 +11,8 @@ from django.views.generic import TemplateView, View
 from oauth.authorization import Authorization
 from oauth.exceptions import OAuthError
 from oauth.request import UserFieldAPIRequest
+
+from account.models import UserProfile
 
 
 class UserProfileView(TemplateView):
@@ -59,8 +63,21 @@ class SSOAuthorizationView(View):
             access_token=token.access_token,
         ).get_oauth_user()
 
-        user, created = User.objects.get_or_create(username=user_obj.username)
+        user, created = User.objects.get_or_create(username=user_obj.username)  # type: Tuple[User, bool]
         user.set_unusable_password()
+
+        user.first_name = user_obj.first_name
+        user.last_name = user_obj.last_name
+        user.email = user_obj.email
+        user.is_staff = True
+        user.save()
+
+        user_profile, created = UserProfile.objects.get_or_create(user=user)
+        user_profile.nickname = user_obj.username
+        user_profile.save()
+
+        group = Group.objects.get(name__iexact='Content Developer')
+        group.user_set.add(user)
 
         user.backend = 'django.contrib.auth.backends.ModelBackend'
         auth.login(request, user)

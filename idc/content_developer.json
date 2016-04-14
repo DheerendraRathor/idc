@@ -1,0 +1,46 @@
+[
+{
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+        "name": "Content Developer",
+        "permissions": [
+            [
+                "change_userprofile",
+                "account",
+                "userprofile"
+            ],
+            [
+                "add_historicalpost",
+                "blog",
+                "historicalpost"
+            ],
+            [
+                "change_historicalpost",
+                "blog",
+                "historicalpost"
+            ],
+            [
+                "delete_historicalpost",
+                "blog",
+                "historicalpost"
+            ],
+            [
+                "add_post",
+                "blog",
+                "post"
+            ],
+            [
+                "change_post",
+                "blog",
+                "post"
+            ],
+            [
+                "delete_post",
+                "blog",
+                "post"
+            ]
+        ]
+    }
+}
+]

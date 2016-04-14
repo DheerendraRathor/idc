@@ -21,11 +21,13 @@ class BlogPostView(TemplateView):
     def get(self, request, *args, **kwargs):
 
         post = self.get_post(**kwargs)
-        if post.status == PostStatusTypes.DRAFT or (not request.user.is_authenticated()
-                                                    and post.status != PostStatusTypes.PUBLISHED):
+        if (post.status == PostStatusTypes.DRAFT and request.user != post.author)\
+                or (not request.user.is_authenticated()
+                    and post.status != PostStatusTypes.PUBLISHED):
             raise Http404
 
-        post.increment_views()
+        if post.author != request.user:
+            post.increment_views()
 
         comment_form = CommentForm()
         comments = Comment.objects.all().filter(post=post)

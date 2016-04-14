@@ -24,9 +24,9 @@ CLIENT_SECRET = 'CLIENT_SECRET'
 
 CLIENT_ID = 'CLIENT_ID'
 
-OAUTH_BASE_URL = 'http://gymkhana.iitb.ac.in/sso/'
+OAUTH_BASE_URL = 'https://gymkhana.iitb.ac.in/sso/'
 
-MINIMUM_SCOPES = ['basic']
+MINIMUM_SCOPES = ['basic', 'profile', 'ldap']
 
 DEFAULT_REDIRECT_URI = ''
 

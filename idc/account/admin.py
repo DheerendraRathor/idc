@@ -5,6 +5,8 @@ from .models import UserProfile
 
 class UserProfileAdmin(admin.ModelAdmin):
 
+    exclude = ['user']
+
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if not request.user.is_superuser:
